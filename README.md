@@ -3,7 +3,7 @@
 Grunt task for [node-browserify](https://github.com/substack/node-browserify).
 
 ## Getting Started
-This plugin requires [Grunt](https://gruntjs.com) `~0.4.0` and Node `>=0.10.x`.
+This plugin requires [Grunt](https://gruntjs.com) `~0.4.0` and Node `>=0.8.x`.
 
 Install this grunt plugin with:
 
