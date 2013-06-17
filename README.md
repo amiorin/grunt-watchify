@@ -13,7 +13,7 @@ npm install grunt-watchify --save-dev
 
 Then add this line to your project's `Gruntfile.js` Gruntfile:
 
-```javascript
+```js
 grunt.loadNpmTasks('grunt-watchify');
 ```
 
@@ -27,7 +27,7 @@ Is the ``src`` attribute starting with ``./``?
 ``grunt-watchify`` is different from ``grunt-browserify``. It follows the
 [nodejs require.resolve() algorithm](http://nodejs.org/docs/v0.4.8/api/all.html#all_Together...).
 
-```javascript
+```js
 ...
 {
   src: './src/main.js'
@@ -45,45 +45,49 @@ Is the ``src`` attribute starting with ``./``?
   ``keepalive`` and ``callback``.
 * The instance of browserify is passed to ``callback`` where you can use the
   api of browserify. Remember to return the instance.
-* The ``keepalive`` is usefull if use ``grunt-watchify`` alone. It works like
+* The ``keepalive`` is useful if you use ``grunt-watchify`` alone. It works like
   in [grunt-contrib-connect#keepalive](https://github.com/gruntjs/grunt-contrib-connect#keepalive).
-```javascript
-watchify: {
-  options: {
-    // defaults options used in b.bundle(opts)
-    detectGlobals: true,
-    insertGlobals: false,
-    ignoreMissing: false,
-    debug: false,
-    standalone: false,
+```js
+grunt.initConfig({
+  watchify: {
+    options: {
+      // defaults options used in b.bundle(opts)
+      detectGlobals: true,
+      insertGlobals: false,
+      ignoreMissing: false,
+      debug: false,
+      standalone: false,
 
-    keepalive: false,
-    callback: function(b) {
-      // configure the browserify instance here
-      b.add(...);
-      b.require(...);
-      b.external(...);
-      b.ignore(...);
-      b.transform(...);
+      keepalive: false,
+      callback: function(b) {
+        // configure the browserify instance here
+        b.add();
+        b.require();
+        b.external();
+        b.ignore();
+        b.transform();
 
-      // return it
-      return b;
+        // return it
+        return b;
+      }
+    },
+    example: {
+      src: './src/**/*.js',
+      dest: 'app/js/bundle.js'
     }
   }
-  example: {
-    src: './src/**/*.js',
-    dest: 'app/js/bundle.js'
-  }
-}
+});
 ```
 * The ``src`` makes difference between ``process`` and ``./process``:
-```javascript
-watchify: {
-  example: {
-    src: ['process', './src/**/*.js'],
-    dest: 'app/js/bundle.js'
-  },
-}
+```js
+grunt.initConfig({
+  watchify: {
+    example: {
+      src: ['process', './src/**/*.js'],
+      dest: 'app/js/bundle.js'
+    },
+  }
+});
 ```
 **Your project files usually start with ``./``**.
 
@@ -98,7 +102,7 @@ You find this example in the directory ``example``.
 * ``grunt-contrib-connect`` serves the files.
 * ``grunt-contrib-livereload`` is used only for the livereload snippet.
 
-```javascript
+```js
 /*
  * grunt-watchify
  * http://github.com/amiorin/grunt-watchify
