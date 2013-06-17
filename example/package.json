@@ -1,5 +1,5 @@
 {
-  "name": "grunt-watchify",
+  "name": "example",
   "description": "Browserify your code",
   "version": "0.0.1",
   "homepage": "https://github.com/amiorin/grunt-watchify",
@@ -25,13 +25,13 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
-    "browserify": "~2.18.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-connect": "~0.3.0",
     "grunt-contrib-livereload": "~0.1.2",
-    "grunt-contrib-watch": "~0.4.4"
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-watchify": "0.0.2"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"

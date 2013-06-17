@@ -53,11 +53,10 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadTasks('../tasks');
-
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-livereload');
+  grunt.loadNpmTasks('grunt-watchify');
 
   grunt.registerTask('default', ['watchify', 'connect', 'watch']);
 };
