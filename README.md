@@ -17,6 +17,25 @@ Then add this line to your project's `Gruntfile.js` Gruntfile:
 grunt.loadNpmTasks('grunt-watchify');
 ```
 
+## Common errors
+```sh
+Running "watchify:source" (watchify) task
+Fatal error: module "src/main.js" not found in require()
+```
+
+Is the ``src`` attribute starting with ``./``?
+``grunt-watchify`` is different from ``grunt-browserify``. It follows the
+[nodejs require.resolve() algorithm](http://nodejs.org/docs/v0.4.8/api/all.html#all_Together...).
+
+```javascript
+...
+{
+  src: './src/main.js'
+  ...
+}
+...
+```
+
 ## Differences with grunt-browserify
 * ``grunt-watchify`` **watches** the dependencies like [watchify][0] and rebuilds
   the bundle, when one dependency is modified.
@@ -66,9 +85,10 @@ watchify: {
   },
 }
 ```
-Your project files start usually with ``./``.
+**Your project files usually start with ``./``**.
 
-* You can use the glob only with your project files.
+* You can use the glob only with your project files and not for the modules in
+  ``node_modules``.
 
 ## Examples
 You find this example in the directory ``example``.
@@ -158,5 +178,7 @@ grunt watchify:example:keepalive
 * [browserify](https://github.com/substack/node-browserify) ;-)
 * [watchify](https://github.com/substack/watchify) for the cache code
 * [grunt-browserify](https://github.com/jmreidy/grunt-browserify) for the tests
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/amiorin/grunt-watchify/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 [0]: https://github.com/substack/watchify
