@@ -19,10 +19,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     watchify: {
+      options: {
+        debug: true
+      },
       example: {
         src: './src/**/*.js',
         dest: 'app/js/bundle.js'
-      },
+      }
     },
 
     watch: {

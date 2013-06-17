@@ -1,3 +1,3 @@
-var body = window.document.querySelector('body');
-body.innerHTML = 'Hello world! (from "src/main.js")';
+var el = window.document.querySelector('div');
+el.innerHTML = 'Hello world! (from "src/main.js")';
 
