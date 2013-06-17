@@ -1,0 +1,46 @@
+{
+  "name": "grunt-watchify",
+  "description": "Browserify your code",
+  "version": "0.0.1",
+  "homepage": "https://github.com/amiorin/grunt-watchify",
+  "author": {
+    "name": "Alberto Miorin",
+    "url": "http://albertomiorin.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amiorin/grunt-watchify"
+  },
+  "bugs": {
+    "url": "https://github.com/amiorin/grunt-watchify/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/amiorin/grunt-watchify/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "browserify": "~2.18.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-nodeunit": "~0.2.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin",
+    "browserify",
+    "watchify"
+  ]
+}
