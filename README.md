@@ -1,4 +1,4 @@
-# grunt-watchify [![Build Status](https://travis-ci.org/amiorin/grunt-watchify.png?branch=master)](https://travis-ci.org/amiorin/grunt-watchify)
+# grunt-watchify [![Build Status](https://travis-ci.org/amiorin/grunt-watchify.png?branch=master)](https://travis-ci.org/amiorin/grunt-watchify) [![Dependency Status](https://gemnasium.com/amiorin/grunt-watchify.png)](https://gemnasium.com/amiorin/grunt-watchify)
 
 Grunt task for [node-browserify](https://github.com/substack/node-browserify).
 
