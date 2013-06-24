@@ -1,7 +1,7 @@
 {
   "name": "grunt-watchify",
   "description": "Browserify your code",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/amiorin/grunt-watchify",
   "author": {
     "name": "Alberto Miorin",
@@ -28,7 +28,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "browserify": "~2.18.1"
+    "browserify": "~2.20.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
