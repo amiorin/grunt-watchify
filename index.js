@@ -14,8 +14,13 @@ var browserify = require('browserify');
 module.exports = function (opts, gruntCb) {
   var b          = gruntCb(browserify(opts));
   var cache      = {};
+  var pkgcache   = {};
   var watching   = {};
   var lastUpdate = 0;
+
+  b.on('package', function (file, pkg) {
+    pkgcache[file] = pkg;
+  });
 
   b.on('dep', function (dep) {
     if (watching[dep.id]) {
@@ -53,6 +58,8 @@ module.exports = function (opts, gruntCb) {
     if (!first) {
       _opts.cache = cache;
     }
+    _opts.includePackage = true;
+    _opts.packageCache = pkgcache;
     first = false;
 
     return bundle(_opts, cb);
