@@ -18,10 +18,11 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('watchify', 'watch mode for browserify builds', function() {
     var task = this;
     var opts = task.options();
-    var ctorOpts = {};
     var shims;
     var keepAlive = this.flags.keepalive || opts.keepalive;
     var done = this.async();
+    var cache = {};
+    var pkgcache = {};
 
     if(keepAlive) {
       done = function(err) {
@@ -34,6 +35,10 @@ module.exports = function(grunt) {
 
     grunt.util.async.forEachSeries(this.files, function (file, next) {
       var aliases;
+      var ctorOpts = {
+        cache: cache,
+        pkgcache: pkgcache
+      };
       opts = task.options();
 
       ctorOpts.entries = grunt.file.expand({filter: 'isFile'}, file.src).map(function (f) {
@@ -240,18 +245,16 @@ module.exports = function(grunt) {
       };
 
       var onBundleUpdate = function () {
-        console.log('update');
-        console.log(arguments);
         bundle(onBundleComplete);
       };
 
       var bundle = function (cb) {
         b.bundle(opts, function (err, src) {
           if (opts.postBundleCB) {
-            opts.postBundleCB(err, src, onBundleComplete);
+            opts.postBundleCB(err, src, cb);
           }
           else {
-            onBundleComplete(err, src);
+            cb(err, src);
           }
         });
       };
@@ -266,82 +269,3 @@ module.exports = function(grunt) {
     }, done);
   });
 };
-
-
-
-
-//./////////////
-//   grunt.registerMultiTask('watchify', 'watch mode for browserify builds', function() {
-//     var self     = this,
-//         _        = grunt.util._,
-//         done     = _.once(self.async()),
-//         outfile  = self.data.dest,
-//         dotfile  = path.join(path.dirname(outfile), '.' + path.basename(outfile)),
-//         destPath = path.dirname(path.resolve(outfile)),
-//         w;
-
-//     if (!grunt.file.exists(destPath)) {
-//       grunt.file.mkdir(destPath);
-//     }
-
-//     var options = self.options({
-//       detectGlobals: true,
-//       insertGlobals: false,
-//       ignoreMissing: false,
-//       debug: false,
-//       standalone: false,
-
-//       keepalive: false,
-//       callback: function(b) {
-//         return b;
-//       }
-//     });
-
-//     var keepAlive = this.flags.keepalive || options.keepalive,
-//         opts      = _.pick(options, 'detectGlobals', 'insertGlobals', 'debug', 'standalone');
-
-
-//     var bundle = function bundle() {
-//       var wb          = w.bundle(opts),
-//           writeStream = fs.createWriteStream(dotfile);
-
-//       wb.pipe(writeStream, {end: false});
-//       wb.on('error', function (err) {
-//         grunt.fail.warn(err);
-//       });
-//       wb.on('end', function() {
-//         writeStream.end();
-//         fs.rename(dotfile, outfile, function (err) {
-//           if (err) {
-//             grunt.fail.warn(err);
-//           }
-//           if (!keepAlive) {
-//             done();
-//           }
-//         });
-//       });
-//     };
-
-//     var files = [];
-//     if (!_.isArray(self.data.src)) {
-//       files = [self.data.src];
-//     }
-//     files = files.filter(function(filePath) {
-//       // node_modules
-//       return filePath[0] !== '.';
-//     });
-//     files = _.union(files, self.filesSrc);
-
-//     w = options.callback(watchify(files));
-
-//     w.on('update', bundle);
-//     bundle();
-
-//     if (keepAlive) {
-//       // This is now an async task. Since we don't call the "done"
-//       // function, this task will never, ever, ever terminate. Have fun!
-//       grunt.log.write('Waiting forever...\n');
-//     }
-//   });
-// };
-
