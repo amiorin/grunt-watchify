@@ -17,9 +17,20 @@ var shim = require('browserify-shim');
 module.exports = function(grunt) {
   grunt.registerMultiTask('watchify', 'watch mode for browserify builds', function() {
     var task = this;
-    var opts;
+    var opts = task.options();
     var ctorOpts = {};
     var shims;
+    var keepAlive = this.flags.keepalive || opts.keepalive;
+    var done = this.async();
+
+    if(keepAlive) {
+      done = function(err) {
+        if(err) {
+          grunt.warn(err);
+        }
+      };
+      grunt.log.write('Waiting forever...\n');
+    }
 
     grunt.util.async.forEachSeries(this.files, function (file, next) {
       var aliases;
@@ -226,19 +237,33 @@ module.exports = function(grunt) {
 
         grunt.file.write(file.dest, src);
         grunt.log.ok('Bundled ' + file.dest);
-        next();
       };
 
-      b.bundle(opts, function (err, src) {
-        if (opts.postBundleCB) {
-          opts.postBundleCB(err, src, onBundleComplete);
-        }
-        else {
-          onBundleComplete(err, src);
-        }
+      var onBundleUpdate = function () {
+        console.log('update');
+        console.log(arguments);
+        bundle(onBundleComplete);
+      };
+
+      var bundle = function (cb) {
+        b.bundle(opts, function (err, src) {
+          if (opts.postBundleCB) {
+            opts.postBundleCB(err, src, onBundleComplete);
+          }
+          else {
+            onBundleComplete(err, src);
+          }
+        });
+      };
+
+      b.on('update', onBundleUpdate);
+
+      bundle(function (err, src) {
+        onBundleComplete(err, src);
+        next();
       });
 
-    }, this.async());
+    }, done);
   });
 };
 
