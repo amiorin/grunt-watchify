@@ -10,7 +10,7 @@
 module.exports = function(grunt) {
   var path  = require('path'),
       fs    = require('fs'),
-      index = require('../index.js');
+      watchify = require('watchify');
 
   grunt.registerMultiTask('watchify', 'watch mode for browserify builds', function() {
     var self     = this,
@@ -73,7 +73,8 @@ module.exports = function(grunt) {
     });
     files = _.union(files, self.filesSrc);
 
-    w = index(files, options.callback);
+    w = options.callback(watchify(files));
+
     w.on('update', bundle);
     bundle();
 
