@@ -25,16 +25,13 @@ module.exports = function(grunt) {
     var pkgcache = {};
 
     if(keepAlive) {
-      done = function(err) {
-        if(err) {
-          grunt.warn(err);
-        }
-      };
+      done = function() {};
       grunt.log.write('Waiting forever...\n');
     }
 
     grunt.util.async.forEachSeries(this.files, function (file, next) {
       var aliases;
+      var firstError;
       var ctorOpts = {
         cache: cache,
         pkgcache: pkgcache
@@ -57,10 +54,13 @@ module.exports = function(grunt) {
         delete opts.noParse;
       }
 
+      var logError = function (err) {
+        firstError = firstError || err;
+        grunt.log.error(err);
+      };
+
       var b = watchify(ctorOpts);
-      b.on('error', function (err) {
-        grunt.fail.warn(err);
-      });
+      b.on('error', logError);
 
       if (opts.ignore) {
         grunt.file.expand({nonull: true}, grunt.util._.flatten(opts.ignore))
@@ -210,20 +210,6 @@ module.exports = function(grunt) {
         }
       }
 
-      if (opts.externalize) {
-        grunt.fail.warn('Externalize is deprecated, please use alias instead');
-        opts.externalize.forEach(function (lib) {
-          if (/\//.test(lib)) {
-            grunt.file.expand({filter: 'isFile'}, lib).forEach(function (file) {
-              b.require(path.resolve(file));
-            });
-          }
-          else {
-            b.require(lib);
-          }
-        });
-      }
-
       if (opts.transform) {
         opts.transform.forEach(function (transform) {
           b.transform(transform);
@@ -237,7 +223,7 @@ module.exports = function(grunt) {
 
       var onBundleComplete = function (err, src) {
         if (err) {
-          grunt.fail.warn(err);
+          return logError(err);
         }
 
         grunt.file.write(file.dest, src);
@@ -245,6 +231,7 @@ module.exports = function(grunt) {
       };
 
       var onBundleUpdate = function () {
+        grunt.log.writeln('Rebundling ' + file.dest + '...');
         bundle(onBundleComplete);
       };
 
@@ -263,7 +250,7 @@ module.exports = function(grunt) {
 
       bundle(function (err, src) {
         onBundleComplete(err, src);
-        next();
+        next(firstError);
       });
 
     }, done);
