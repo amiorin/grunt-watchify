@@ -28,10 +28,7 @@ module.exports = function(grunt) {
         src: './test/fixtures/alias/*.js',
         dest: 'tmp/alias.js',
         options: {
-          callback: function(b) {
-            b.require('./test/fixtures/alias/toBeAliased.js', {expose: 'alias'});
-            return b;
-          }
+          alias: 'test/fixtures/alias/toBeAliased.js:alias'
         }
       },
       sourceMaps: {

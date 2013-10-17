@@ -28,15 +28,18 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "watchify": ">=0.2.0 <1.0.0"
+    "browserify-shim": "~2.0.8",
+    "through": "~2.3.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.4.1",
-    "grunt-contrib-nodeunit": "~0.2.0"
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "watchify": "~0.2.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "watchify": ">=0.2.0 <1.0.0"
   },
   "keywords": [
     "gruntplugin",
