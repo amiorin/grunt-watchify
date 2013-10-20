@@ -17,12 +17,14 @@ var shim = require('browserify-shim');
 module.exports = function(grunt) {
   grunt.registerMultiTask('watchify', 'watch mode for browserify builds', function() {
     var task = this;
-    var opts = task.options();
+    var opts = task.options({watch: true});
     var shims;
     var keepAlive = this.flags.keepalive || opts.keepalive;
+    var watch = this.flags.watch || opts.watch;
     var done = this.async();
     var cache = {};
     var pkgcache = {};
+    var firstError;
 
     if(keepAlive) {
       done = function() {};
@@ -31,7 +33,6 @@ module.exports = function(grunt) {
 
     grunt.util.async.forEachSeries(this.files, function (file, next) {
       var aliases;
-      var firstError;
       var ctorOpts = {
         cache: cache,
         pkgcache: pkgcache
@@ -246,13 +247,17 @@ module.exports = function(grunt) {
         });
       };
 
-      b.on('update', onBundleUpdate);
+      if (watch) {
+        b.on('update', onBundleUpdate);
+      }
 
       bundle(function (err, src) {
         onBundleComplete(err, src);
-        next(firstError);
+        next();
       });
 
-    }, done);
+    }, function () {
+      done(watch ? null : firstError);
+    });
   });
 };
