@@ -13,6 +13,8 @@ var through = require('through');
 
 var watchify = require('watchify');
 var shim = require('browserify-shim');
+var cache = {};
+var pkgcache = {};
 
 module.exports = function(grunt) {
   grunt.registerMultiTask('watchify', 'watch mode for browserify builds', function() {
@@ -22,13 +24,12 @@ module.exports = function(grunt) {
     var keepAlive = this.flags.keepalive || opts.keepalive;
     var watch = this.flags.watch || opts.watch;
     var done = this.async();
-    var cache = {};
-    var pkgcache = {};
     var firstError;
 
     if(keepAlive) {
-      done = function() {};
-      grunt.log.write('Waiting forever...\n');
+      done = function() {
+        grunt.log.writeln('Waiting...');
+      };
     }
 
     grunt.util.async.forEachSeries(this.files, function (file, next) {
