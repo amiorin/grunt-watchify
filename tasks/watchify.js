@@ -73,7 +73,8 @@ module.exports = function(grunt) {
     });
     files = _.union(files, self.filesSrc);
 
-    w = index(files, options.callback);
+    var indexOpts = _.extend({entries: files}, _.pick(options, 'extensions'));
+    w = index(indexOpts, options.callback);
     w.on('update', bundle);
     bundle();
 
