@@ -218,6 +218,17 @@ module.exports = function(grunt) {
         });
       }
 
+      if (opts.plugins) {
+        opts.plugins.forEach(function (plugin) {
+          var fn = plugin, opts = {};
+          if(typeof plugin === 'object') {
+            fn = plugin.plugin;
+            opts = plugin.options;
+          }
+          b.plugin(fn, opts);
+        });
+      }
+
       var destPath = path.dirname(path.resolve(file.dest));
       if (!grunt.file.exists(destPath)) {
         grunt.file.mkdir(destPath);
