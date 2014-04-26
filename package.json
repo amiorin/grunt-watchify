@@ -35,11 +35,11 @@
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.4.1",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "watchify": "git+https://github.com/goodeggs/watchify.git#6e29114c657b3f4460d1e52915ac65196bdcadf1"
+    "watchify": "~0.8.2"
   },
   "peerDependencies": {
     "grunt": "~0.4.1",
-    "watchify": ">=0.2.0 <1.0.0"
+    "watchify": "~0.8.2"
   },
   "keywords": [
     "gruntplugin",
