@@ -214,7 +214,8 @@ module.exports = function(grunt) {
 
       if (opts.transform) {
         opts.transform.forEach(function (transform) {
-          b.transform(transform);
+          if (Array.isArray(transform)) { b.transform.apply(b, transform); }
+          else { b.transform(transform); }
         });
       }
 
