@@ -1,3 +1,6 @@
+# DEPRECATED
+Use [https://github.com/jmreidy/grunt-browserify](https://github.com/jmreidy/grunt-browserify)
+
 # grunt-watchify [![Build Status](https://travis-ci.org/amiorin/grunt-watchify.png?branch=master)](https://travis-ci.org/amiorin/grunt-watchify) [![Dependency Status](https://gemnasium.com/amiorin/grunt-watchify.png)](https://gemnasium.com/amiorin/grunt-watchify)
 
 Grunt task for [node-browserify](https://github.com/substack/node-browserify).
