@@ -52,7 +52,7 @@ module.exports = {
     test.expect(1);
 
     var actual = readFile('tmp/sourceMaps.js');
-    test.ok(actual.match(/\/\/@ sourceMappingURL=/));
+    test.ok(actual.match(/\/\/# sourceMappingURL=/));
 
     test.done();
   }
